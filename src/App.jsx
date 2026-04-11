@@ -3,6 +3,7 @@ import { MantineProvider } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
+import '@mantine/carousel/styles.css';
 
 import { CartProvider } from './context/CartContext';
 import { WishlistProvider } from './context/WishlistContext';
@@ -25,15 +26,15 @@ import SalePage from './pages/SalePage';
 import NewArrivalsPage from './pages/NewArrivalsPage';
 
 const mantineTheme = {
-  fontFamily: 'Inter, sans-serif',
-  headings: { fontFamily: 'Playfair Display, serif' },
-  primaryColor: 'red',
+  fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif",
+  headings: { fontFamily: "'Playfair Display', Georgia, serif" },
+  primaryColor: 'rose',
   colors: {
-    red: ['#fff5f5','#ffe3e3','#ffc9c9','#ffa8a8','#ff8787','#ff6b6b','#fa5252','#f03e3e','#e94560','#c73652'],
+    rose: ['#fff1f2','#ffe4e6','#fecdd3','#fda4af','#fb7185','#f43f5e','#e11d48','#be123c','#9f1239','#881337'],
   },
   defaultRadius: 'md',
   components: {
-    Button: { defaultProps: { radius: 'xl' } },
+    Button: { defaultProps: { radius: 'md' } },
     TextInput: { defaultProps: { radius: 'md' } },
     PasswordInput: { defaultProps: { radius: 'md' } },
     Select: { defaultProps: { radius: 'md' } },

@@ -1,175 +1,115 @@
-import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { TextInput, Notification } from '@mantine/core';
-import { IconTrash, IconShoppingBag, IconTag, IconCheck, IconX } from '@tabler/icons-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { IconShoppingBag, IconTrash, IconMinus, IconPlus, IconArrowLeft } from '@tabler/icons-react';
 import { useCart } from '../context/CartContext';
-import { offers } from '../data/products';
 import { formatPrice } from '../utils/helpers';
 
 export default function CartPage() {
-  const { items, dispatch, subtotal, discount, shipping, total, coupon } = useCart();
-  const [couponCode, setCouponCode] = useState('');
-  const [couponMsg, setCouponMsg] = useState(null);
+  const { items, dispatch, totalPrice } = useCart();
   const navigate = useNavigate();
 
-  const applyCoupon = () => {
-    const found = offers.find(o => o.id === couponCode.toUpperCase());
-    if (!found) { setCouponMsg({ type: 'error', text: 'Invalid coupon code' }); return; }
-    if (subtotal < found.minOrder) { setCouponMsg({ type: 'error', text: `Minimum order Rs. ${found.minOrder} required` }); return; }
-    dispatch({ type: 'APPLY_COUPON', payload: found });
-    setCouponMsg({ type: 'success', text: `Coupon applied! ${found.description}` });
-  };
+  const up = (id, q) => dispatch({ type: 'UPDATE_QUANTITY', payload: { id, quantity: q + 1 } });
+  const down = (id, q) => q > 1 && dispatch({ type: 'UPDATE_QUANTITY', payload: { id, quantity: q - 1 } });
+  const rem = (id) => dispatch({ type: 'REMOVE_ITEM', payload: id });
 
-  if (items.length === 0) return (
-    <div className="max-w-2xl mx-auto px-4 py-24 text-center">
-      <div className="text-8xl mb-6">🛒</div>
-      <h2 className="font-heading text-2xl font-bold text-[#1a1a2e] mb-3">Your cart is empty</h2>
-      <p className="text-gray-500 mb-8">Looks like you haven't added anything yet.</p>
-      <Link to="/" className="inline-block bg-[#e94560] text-white px-8 py-3 rounded-full font-semibold hover:bg-[#c73652] transition-colors">
-        Start Shopping
-      </Link>
-    </div>
-  );
+  if (items.length === 0) {
+    return (
+      <div className="section-spacing text-center">
+        <div className="mb-10 text-gray-200 flex justify-center"><IconShoppingBag size={80} stroke={1} /></div>
+        <h1 className="text-4xl font-black uppercase mb-4">Cart is empty</h1>
+        <p className="text-gray-500 mb-10 text-sm uppercase tracking-widest">Start adding some items to your curation.</p>
+        <Link to="/" className="btn-clean btn-black px-12 uppercase text-xs">Back to Shop</Link>
+      </div>
+    );
+  }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <h1 className="font-heading text-2xl sm:text-3xl font-bold text-[#1a1a2e] mb-8">
-        Shopping Cart <span className="text-gray-400 text-lg font-normal">({items.length} items)</span>
-      </h1>
+    <div className="container-clean section-spacing">
+      <div className="mb-16 border-b border-light pb-8">
+        <h1 className="text-5xl font-black uppercase tracking-tight">Shopping Cart</h1>
+        <p className="text-gray-400 text-xs uppercase tracking-[0.4em] mt-2">[{items.length} items to review]</p>
+      </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Items */}
-        <div className="lg:col-span-2 space-y-4">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
+        {/* List Section */}
+        <div className="lg:col-span-8 space-y-4">
           <AnimatePresence>
-            {items.map(item => (
-              <motion.div
+            {items.map((item) => (
+              <motion.div 
                 key={`${item.id}-${item.selectedSize}-${item.selectedColor}`}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 20, height: 0 }}
-                className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 flex gap-4"
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                className="flex flex-col sm:flex-row gap-6 p-6 bg-white border border-light"
               >
-                <Link to={`/product/${item.id}`} className="w-24 h-28 rounded-xl overflow-hidden bg-gray-50 flex-shrink-0">
-                  <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
-                </Link>
-                <div className="flex-1 min-w-0">
-                  <div className="flex justify-between gap-2">
+                {/* Image */}
+                <div className="w-full sm:w-32 aspect-[3/4] bg-soft border border-light shrink-0">
+                  <img src={item.image} alt={item.title} className="w-full h-full object-cover grayscale-[0.3]" />
+                </div>
+
+                {/* Details */}
+                <div className="flex-1 flex flex-col justify-between">
+                  <div className="flex justify-between items-start">
                     <div>
-                      <p className="text-xs text-gray-400 font-medium">{item.brand}</p>
-                      <Link to={`/product/${item.id}`} className="text-sm font-semibold text-gray-900 hover:text-[#e94560] line-clamp-2">{item.title}</Link>
-                      <div className="flex gap-3 mt-1">
-                        <span className="text-xs text-gray-500">Size: <strong>{item.selectedSize}</strong></span>
-                        <span className="text-xs text-gray-500">Color: <strong>{item.selectedColor}</strong></span>
+                      <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1">{item.brand}</p>
+                      <h3 className="text-lg font-bold uppercase tracking-tight text-black">{item.title}</h3>
+                      <div className="flex gap-4 mt-2">
+                        <span className="text-[10px] uppercase font-bold text-gray-400">Size: {item.selectedSize}</span>
+                        <span className="text-[10px] uppercase font-bold text-gray-400">Color: {item.selectedColor}</span>
                       </div>
                     </div>
-                    <button
-                      onClick={() => dispatch({ type: 'REMOVE_ITEM', payload: item })}
-                      className="text-gray-400 hover:text-red-500 transition-colors flex-shrink-0"
-                    >
-                      <IconTrash size={16} />
-                    </button>
+                    <span className="font-bold text-black">{formatPrice(item.finalPrice * item.quantity)}</span>
                   </div>
-                  <div className="flex items-center justify-between mt-3">
-                    <div className="flex items-center border border-gray-200 rounded-lg overflow-hidden">
-                      <button
-                        onClick={() => dispatch({ type: 'UPDATE_QTY', payload: { ...item, quantity: item.quantity - 1 } })}
-                        className="px-3 py-1.5 hover:bg-gray-50 text-gray-600 text-sm font-bold"
-                      >-</button>
-                      <span className="px-3 py-1.5 text-sm font-semibold border-x border-gray-200">{item.quantity}</span>
-                      <button
-                        onClick={() => dispatch({ type: 'UPDATE_QTY', payload: { ...item, quantity: item.quantity + 1 } })}
-                        className="px-3 py-1.5 hover:bg-gray-50 text-gray-600 text-sm font-bold"
-                      >+</button>
+
+                  <div className="flex items-center justify-between mt-6 pt-4 border-t border-light">
+                    <div className="flex items-center border border-light p-1 rounded-sm">
+                      <button onClick={() => down(item.id, item.quantity)} className="w-8 h-8 flex items-center justify-center hover:bg-soft transition-colors"><IconMinus size={14} /></button>
+                      <span className="w-10 text-center text-xs font-bold">{item.quantity}</span>
+                      <button onClick={() => up(item.id, item.quantity)} className="w-8 h-8 flex items-center justify-center hover:bg-soft transition-colors"><IconPlus size={14} /></button>
                     </div>
-                    <div className="text-right">
-                      <p className="text-sm font-bold text-[#1a1a2e]">{formatPrice(item.finalPrice * item.quantity)}</p>
-                      <p className="text-xs text-gray-400">{formatPrice(item.finalPrice)} each</p>
-                    </div>
+                    <button onClick={() => rem(item.id)} className="text-gray-400 hover:text-black transition-colors"><IconTrash size={18} /></button>
                   </div>
                 </div>
               </motion.div>
             ))}
           </AnimatePresence>
+          
+          <Link to="/" className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-black mt-8">
+            <IconArrowLeft size={16} /> Update my selection
+          </Link>
         </div>
 
-        {/* Summary */}
-        <div className="space-y-4">
-          {/* Coupon */}
-          <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
-            <h3 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
-              <IconTag size={16} className="text-[#e94560]" /> Apply Coupon
-            </h3>
-            <div className="flex gap-2">
-              <TextInput
-                placeholder="Enter coupon code"
-                value={couponCode}
-                onChange={e => setCouponCode(e.target.value)}
-                size="sm"
-                radius="md"
-                className="flex-1"
-                disabled={!!coupon}
-              />
-              {coupon ? (
-                <button onClick={() => { dispatch({ type: 'REMOVE_COUPON' }); setCouponMsg(null); setCouponCode(''); }} className="px-3 py-2 bg-red-50 text-red-500 rounded-lg text-sm font-medium hover:bg-red-100">
-                  <IconX size={14} />
-                </button>
-              ) : (
-                <button onClick={applyCoupon} className="px-4 py-2 bg-[#1a1a2e] text-white rounded-lg text-sm font-semibold hover:bg-[#e94560] transition-colors">
-                  Apply
-                </button>
-              )}
-            </div>
-            {couponMsg && (
-              <p className={`text-xs mt-2 ${couponMsg.type === 'success' ? 'text-green-600' : 'text-red-500'}`}>
-                {couponMsg.text}
-              </p>
-            )}
-            <div className="mt-3 flex flex-wrap gap-1">
-              {offers.slice(0, 3).map(o => (
-                <button key={o.id} onClick={() => setCouponCode(o.id)} className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded font-mono hover:bg-gray-200">
-                  {o.id}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Order Summary */}
-          <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
-            <h3 className="font-semibold text-gray-900 mb-4">Order Summary</h3>
-            <div className="space-y-3 text-sm">
-              <div className="flex justify-between text-gray-600">
-                <span>Subtotal</span>
-                <span>{formatPrice(subtotal)}</span>
+        {/* Summary Sidebar */}
+        <div className="lg:col-span-4 space-y-6">
+          <div className="p-10 bg-black text-white rounded-sm sticky top-32">
+            <h2 className="text-xl font-bold uppercase tracking-widest mb-10 pb-4 border-b border-white/10">Summary</h2>
+            
+            <div className="space-y-6 mb-12 text-sm font-medium uppercase tracking-widest">
+              <div className="flex justify-between text-gray-400">
+                <span>Items Subtotal</span>
+                <span className="text-white">{formatPrice(totalPrice)}</span>
               </div>
-              {discount > 0 && (
-                <div className="flex justify-between text-green-600">
-                  <span>Coupon Discount</span>
-                  <span>-{formatPrice(discount)}</span>
+              <div className="flex justify-between text-gray-400">
+                <span>Shipping Fee</span>
+                <span className="text-green-400 font-bold">Free</span>
+              </div>
+              <div className="pt-8 border-t border-white/10 flex justify-between items-end">
+                <div>
+                  <p className="text-[10px] text-gray-500 mb-1">Total to pay</p>
+                  <p className="text-3xl font-black text-white tracking-tighter">{formatPrice(totalPrice)}</p>
                 </div>
-              )}
-              <div className="flex justify-between text-gray-600">
-                <span>Shipping</span>
-                <span className={shipping === 0 ? 'text-green-600 font-medium' : ''}>{shipping === 0 ? 'FREE' : formatPrice(shipping)}</span>
-              </div>
-              {shipping > 0 && (
-                <p className="text-xs text-gray-400">Add {formatPrice(2000 - subtotal)} more for free shipping</p>
-              )}
-              <div className="border-t border-gray-100 pt-3 flex justify-between font-bold text-base text-[#1a1a2e]">
-                <span>Total</span>
-                <span>{formatPrice(total)}</span>
               </div>
             </div>
-            <button
+
+            <button 
               onClick={() => navigate('/checkout')}
-              className="w-full mt-5 bg-[#e94560] text-white py-3.5 rounded-xl font-semibold hover:bg-[#c73652] transition-colors flex items-center justify-center gap-2"
+              className="w-full bg-white text-black py-5 font-black uppercase tracking-widest text-xs hover:bg-gray-100 transition-all rounded-sm"
             >
-              <IconShoppingBag size={18} />
-              Proceed to Checkout
+              Continue to Payment
             </button>
-            <Link to="/" className="block text-center text-sm text-gray-500 hover:text-[#e94560] mt-3">
-              ← Continue Shopping
-            </Link>
+          </div>
+          
+          <div className="p-6 bg-soft border border-light">
+            <p className="text-[10px] text-gray-500 uppercase tracking-widest font-bold mb-2">Delivery Policy</p>
+            <p className="text-xs text-gray-600 font-medium leading-relaxed">Most orders are fulfilled within 48 hours and shipped from our Kathmandu studio archive.</p>
           </div>
         </div>
       </div>
