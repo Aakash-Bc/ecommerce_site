@@ -3,8 +3,8 @@ import { categories } from '../../data/products';
 
 export default function CategorySection() {
   return (
-    <section className="section-spacing bg-soft">
-      <div className="container-clean">
+    <section className="py-24 bg-soft">
+      <div className="max-w-[1536px] mx-auto px-6 md:px-10">
         <div className="mb-8 border-b border-light pb-8">
           <span className="text-[10px] font-black tracking-[0.4em] text-gray-400 uppercase mb-2 block">Curation</span>
           <h2 className="text-4xl font-black text-black tracking-tighter uppercase leading-none">Departments</h2>

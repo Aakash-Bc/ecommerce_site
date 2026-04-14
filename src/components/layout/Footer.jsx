@@ -1,54 +1,31 @@
 import { Link } from 'react-router-dom';
 import { 
   IconBrandInstagram, IconBrandFacebook, IconBrandTwitter, 
-  IconBrandYoutube, IconArrowRight
+  IconArrowRight, IconMapPin, IconClock
 } from '@tabler/icons-react';
 
-const LINKS = [
-  { 
-    title: 'Archive', 
-    items: [
-      { label: 'Men', to: '/category/men' },
-      { label: 'Women', to: '/category/women' },
-      { label: 'Kids', to: '/category/kids' },
-      { label: 'Sale', to: '/sale' },
-    ]
-  },
-  { 
-    title: 'Support', 
-    items: [
-      { label: 'Contact', to: '/contact' },
-      { label: 'Shipping', to: '/shipping' },
-      { label: 'Returns', to: '/returns' },
-      { label: 'Track Order', to: '/status' },
-    ]
-  },
-  { 
-    title: 'Legal', 
-    items: [
-      { label: 'Privacy Policy', to: '/privacy' },
-      { label: 'Terms of Service', to: '/terms' },
-    ]
-  }
-];
-
 export default function Footer() {
+  const currentYear = new Date().getFullYear();
+
   return (
-    <footer className="bg-white border-t border-light pt-32 pb-16">
-      <div className="container-clean">
+    <footer className="bg-white border-t border-gray-100 pt-24 pb-16 mt-32">
+      <div className="max-w-[1536px] mx-auto px-6 md:px-10">
         
-        {/* Brand & Newsletter */}
-        <div className="flex flex-col lg:flex-row justify-between items-start gap-20 mb-32">
-          <div className="max-w-md">
-            <Link to="/" className="flex items-center gap-2 mb-8">
-              <span className="text-3xl font-black uppercase tracking-tighter">Aakash</span>
-              <div className="w-2 h-2 bg-black rounded-full" />
+        {/* Main Footer Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
+          
+          {/* Column 1: Brand / About */}
+          <div className="space-y-6">
+            <Link to="/" className="flex items-center gap-2">
+              <span className="text-xl font-black uppercase tracking-tighter">Studio</span>
+              <div className="w-1.5 h-1.5 bg-black rounded-full" />
             </Link>
-            <p className="text-gray-500 font-medium leading-relaxed mb-10 text-sm">
-              Modern silhouettes designed for the contemporary wardrobe. Dedicated to quality, transparency, and sustainable luxury in Nepal.
+            <p className="text-gray-500 text-sm leading-relaxed max-w-xs">
+              A contemporary fashion archive dedicated to minimalist design and sustainable garment construction. 
+              Crafted in Kathmandu, delivered globally.
             </p>
-            <div className="flex gap-6">
-              {[IconBrandInstagram, IconBrandFacebook, IconBrandTwitter, IconBrandYoutube].map((Icon, i) => (
+            <div className="flex gap-5">
+              {[IconBrandInstagram, IconBrandFacebook, IconBrandTwitter].map((Icon, i) => (
                 <a key={i} href="#" className="text-gray-400 hover:text-black transition-colors">
                   <Icon size={20} stroke={1.5} />
                 </a>
@@ -56,53 +33,70 @@ export default function Footer() {
             </div>
           </div>
 
-          <div className="w-full lg:w-auto min-w-[350px]">
-            <h4 className="text-[10px] font-black uppercase tracking-widest text-black mb-6">Stay Connected</h4>
+          {/* Column 2: Shop */}
+          <div>
+            <h4 className="text-[11px] font-black uppercase tracking-widest text-black mb-6">Collections</h4>
+            <ul className="space-y-4">
+              <li><Link to="/category/men" className="text-sm text-gray-500 hover:text-black transition-colors">Men's Archive</Link></li>
+              <li><Link to="/category/women" className="text-sm text-gray-500 hover:text-black transition-colors">Women's Collection</Link></li>
+              <li><Link to="/new-arrivals" className="text-sm text-gray-500 hover:text-black transition-colors">New Arrivals</Link></li>
+              <li><Link to="/sale" className="text-sm text-gray-500 hover:text-black transition-colors">Limited Sale</Link></li>
+            </ul>
+          </div>
+
+          {/* Column 3: Client Service */}
+          <div>
+            <h4 className="text-[11px] font-black uppercase tracking-widest text-black mb-6">Support</h4>
+            <ul className="space-y-4">
+              <li><Link to="/shipping" className="text-sm text-gray-500 hover:text-black transition-colors">Shipping & Returns</Link></li>
+              <li><Link to="/contact" className="text-sm text-gray-500 hover:text-black transition-colors">Contact Us</Link></li>
+              <li><Link to="/faqs" className="text-sm text-gray-500 hover:text-black transition-colors">Delivery FAQs</Link></li>
+              <li><Link to="/privacy" className="text-sm text-gray-500 hover:text-black transition-colors">Privacy Policy</Link></li>
+            </ul>
+          </div>
+
+          {/* Column 4: Newsletter */}
+          <div>
+            <h4 className="text-[11px] font-black uppercase tracking-widest text-black mb-6">Stay Updated</h4>
+            <p className="text-sm text-gray-500 mb-6">Join our newsletter to receive updates on new drops and events.</p>
             <form onSubmit={e => e.preventDefault()} className="relative">
               <input 
                 type="email" 
-                placeholder="YOUR EMAIL ADDRESS"
-                className="w-full bg-soft border-none px-6 py-4 text-xs font-bold uppercase tracking-widest outline-none focus:bg-gray-100 transition-all rounded-sm placeholder:text-gray-400"
+                placeholder="Email address"
+                className="w-full bg-gray-50 border-none px-4 py-3 text-sm focus:ring-1 focus:ring-black transition-all outline-none rounded-sm"
               />
-              <button type="submit" className="absolute right-4 top-1/2 -translate-y-1/2 text-black hover:text-gray-500">
-                <IconArrowRight size={20} />
+              <button type="submit" className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-black transition-colors">
+                <IconArrowRight size={18} />
               </button>
             </form>
-            <p className="text-[9px] text-gray-400 uppercase tracking-widest font-bold mt-4">Receive notifications for new drops and archives.</p>
           </div>
+
         </div>
 
-        {/* Links Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-16 mb-32 pt-16 border-t border-light">
-          {LINKS.map((col) => (
-            <div key={col.title}>
-              <h4 className="text-[10px] font-black uppercase tracking-widest text-black mb-8 px-1">{col.title}</h4>
-              <ul className="space-y-4">
-                {col.items.map((item) => (
-                  <li key={item.label}>
-                    <Link to={item.to} className="text-xs font-bold text-gray-400 hover:text-black hover:bg-soft px-1 py-1 transition-all inline-block uppercase tracking-tight">
-                      {item.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+        {/* Info Bar */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-10 border-t border-gray-100 items-center">
+          
+          <div className="flex items-center gap-6">
+            <div className="flex items-center gap-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+              <IconMapPin size={12} /> Kathmandu, NP
             </div>
-          ))}
-        </div>
+            <div className="flex items-center gap-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+              <IconClock size={12} /> GMT +5:45
+            </div>
+          </div>
 
-        {/* Final Bottom */}
-        <div className="flex flex-col md:flex-row justify-between items-center gap-8 pt-12 border-t border-light">
-          <p className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.4em]">
-            © 2026 Aakash Fashion Studio.
-          </p>
-          <div className="flex gap-8 opacity-20 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-1000">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" className="h-4" alt="Visa" />
-            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" className="h-6" alt="Mastercard" />
+          <div className="flex justify-center gap-8 grayscale opacity-20 hover:opacity-100 transition-opacity duration-500">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" className="h-3" alt="Visa" />
+            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" className="h-5" alt="Mastercard" />
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" className="h-4" alt="PayPal" />
           </div>
-          <div className="hidden lg:flex gap-10">
-            <span className="text-[10px] font-black uppercase tracking-widest text-gray-300">Kathmandu, NP</span>
-            <span className="text-[10px] font-black uppercase tracking-widest text-gray-300">GMT +5:45</span>
+
+          <div className="text-right">
+            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+              © {currentYear} Studio Edition. Built for the modern world.
+            </p>
           </div>
+
         </div>
       </div>
     </footer>

@@ -24,51 +24,50 @@ const pad = n => String(n).padStart(2, '0');
 
 export default function FlashSale() {
   const time = useCountdown(8);
-  const flash = products.filter(p => p.discountPercentage >= 30).slice(0, 3);
-  const [qv, setQv] = useState(null);
-  const [opened, { open, close }] = useDisclosure(false);
+  const flash = products.filter(p => p.discountPercentage >= 30).slice(0, 4);
 
   return (
-    <section className="py-16 bg-gray-950">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-24 bg-black">
+      <div className="max-w-[1536px] mx-auto px-6 md:px-10">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 mb-12">
+        <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-10 mb-16 border-b border-white/10 pb-12">
           <div>
-            <p className="text-xs font-bold uppercase tracking-widest text-rose-500 mb-2">Limited Time</p>
-            <h2 className="font-display text-3xl sm:text-4xl font-bold text-white">Flash Sale</h2>
+            <p className="text-[10px] font-black uppercase tracking-[0.5em] text-gray-500 mb-4 italic">Limited Selection</p>
+            <h2 className="text-4xl md:text-5xl font-black text-white tracking-tighter uppercase leading-none">The Archive Sale</h2>
           </div>
 
           {/* Countdown */}
-          <div className="flex items-center gap-4">
-            <span className="text-sm text-gray-500">Ends in</span>
-            <div className="flex items-center gap-2">
+          <div className="flex items-center gap-10">
+            <div className="flex items-center gap-6">
               {[pad(time.h), pad(time.m), pad(time.s)].map((v, i) => (
-                <div key={i} className="flex items-center gap-2">
-                  <div className="flex flex-col items-center">
-                    <div className="w-14 h-14 rounded-xl bg-rose-600 flex items-center justify-center text-2xl font-bold text-white tabular-nums">{v}</div>
-                    <span className="text-[9px] mt-1.5 font-bold uppercase tracking-wider text-gray-500">{['HRS','MIN','SEC'][i]}</span>
-                  </div>
-                  {i < 2 && <span className="text-white font-bold text-xl mb-4">:</span>}
+                <div key={i} className="flex flex-col items-center">
+                  <span className="text-4xl font-black text-white tracking-tighter tabular-nums">{v}</span>
+                  <span className="text-[8px] mt-1 font-black uppercase tracking-[0.3em] text-gray-500">{['HR','MN','SC'][i]}</span>
                 </div>
               ))}
             </div>
+            <Link to="/sale" className="text-[10px] font-black uppercase tracking-widest text-white border-b border-white/20 pb-2 hover:border-white transition-all">
+              Discover All
+            </Link>
           </div>
-
-          <Link to="/sale" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-rose-600 text-white text-sm font-semibold hover:bg-rose-700 transition-all">
-            All Deals <IconArrowRight size={14} />
-          </Link>
         </div>
 
         {/* Products */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {flash.map((p, i) => (
-            <motion.div key={p.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
-              <ProductCard product={p} onQuickView={x => { setQv(x); open(); }} />
+            <motion.div 
+              key={p.id} 
+              initial={{ opacity: 0, y: 20 }} 
+              whileInView={{ opacity: 1, y: 0 }} 
+              viewport={{ once: true }} 
+              transition={{ delay: i * 0.1 }}
+              className="invert" // Make ProductCards look good on black
+            >
+              <ProductCard product={p} />
             </motion.div>
           ))}
         </div>
       </div>
-      <QuickViewModal product={qv} opened={opened} onClose={close} />
     </section>
   );
 }

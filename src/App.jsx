@@ -26,19 +26,29 @@ import SalePage from './pages/SalePage';
 import NewArrivalsPage from './pages/NewArrivalsPage';
 
 const mantineTheme = {
-  fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif",
-  headings: { fontFamily: "'Playfair Display', Georgia, serif" },
-  primaryColor: 'rose',
+  fontFamily: "'Inter', sans-serif",
+  headings: { fontFamily: "'Inter', sans-serif" },
+  primaryColor: 'dark',
+  defaultRadius: 'none',
   colors: {
-    rose: ['#fff1f2','#ffe4e6','#fecdd3','#fda4af','#fb7185','#f43f5e','#e11d48','#be123c','#9f1239','#881337'],
+    dark: [
+      '#C1C1C1', '#A6A6A6', '#8C8C8C', '#717171', '#565656', 
+      '#3C3C3C', '#212121', '#1A1A1A', '#121212', '#000000'
+    ],
   },
-  defaultRadius: 'md',
   components: {
-    Button: { defaultProps: { radius: 'md' } },
-    TextInput: { defaultProps: { radius: 'md' } },
-    PasswordInput: { defaultProps: { radius: 'md' } },
-    Select: { defaultProps: { radius: 'md' } },
-  },
+    Button: {
+      defaultProps: {
+        variant: 'filled',
+        color: 'dark',
+      },
+    },
+    Modal: {
+      styles: {
+        title: { fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.1em' },
+      }
+    }
+  }
 };
 
 function AppRoutes() {

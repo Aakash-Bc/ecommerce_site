@@ -50,7 +50,7 @@ export default function HeroBanner() {
                initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}
                className="flex gap-4"
             >
-              <Link to={s.link} className="btn-clean btn-black px-12 uppercase text-xs">
+              <Link to={s.link} className="inline-flex items-center justify-center px-12 py-5 bg-black text-white font-black text-[10px] uppercase tracking-[0.3em] hover:scale-105 transition-all duration-500">
                 Shop Collection
               </Link>
             </motion.div>
@@ -58,7 +58,7 @@ export default function HeroBanner() {
         </motion.div>
       </AnimatePresence>
 
-      <div className="absolute bottom-10 inset-x-0 container-clean flex justify-center gap-3">
+      <div className="absolute bottom-10 inset-x-0 max-w-[1536px] mx-auto px-6 md:px-10 flex justify-center gap-3">
         {SLIDES.map((_, i) => (
           <button 
             key={i} 

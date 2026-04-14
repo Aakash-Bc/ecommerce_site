@@ -3,8 +3,8 @@ import ProductCard from '../ui/ProductCard';
 
 export default function ProductSection({ title, subtitle, products, viewAllLink }) {
   return (
-    <section className="section-spacing bg-white">
-      <div className="container-clean">
+    <section className="py-24 bg-white">
+      <div className="max-w-[1536px] mx-auto px-6 md:px-10">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-6 border-b border-light pb-8">
           <div>
             {subtitle && (
