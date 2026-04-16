@@ -30,18 +30,18 @@ export default function FlashSale() {
     <section className="py-24 bg-black">
       <div className="max-w-[1536px] mx-auto px-6 md:px-10">
         {/* Header */}
-        <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-10 mb-16 border-b border-white/10 pb-12">
+        <div className="flex flex-col md:flex-row items-center text-center md:text-left md:items-end justify-between gap-10 mb-16 border-b border-white/10 pb-12">
           <div>
             <p className="text-[10px] font-black uppercase tracking-[0.5em] text-gray-500 mb-4 italic">Limited Selection</p>
             <h2 className="text-4xl md:text-5xl font-black text-white tracking-tighter uppercase leading-none">The Archive Sale</h2>
           </div>
 
           {/* Countdown */}
-          <div className="flex items-center gap-10">
-            <div className="flex items-center gap-6">
+          <div className="flex flex-col sm:flex-row items-center gap-6 md:gap-10">
+            <div className="flex items-center gap-4 md:gap-10">
               {[pad(time.h), pad(time.m), pad(time.s)].map((v, i) => (
                 <div key={i} className="flex flex-col items-center">
-                  <span className="text-4xl font-black text-white tracking-tighter tabular-nums">{v}</span>
+                  <span className="text-3xl md:text-4xl font-black text-white tracking-tighter tabular-nums">{v}</span>
                   <span className="text-[8px] mt-1 font-black uppercase tracking-[0.3em] text-gray-500">{['HR','MN','SC'][i]}</span>
                 </div>
               ))}

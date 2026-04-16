@@ -10,9 +10,9 @@ export default function TrustBadges() {
   return (
     <section className="bg-white border-b border-gray-50 py-10">
       <div className="max-w-[1536px] mx-auto px-6 md:px-10">
-        <div className="grid grid-cols-2 lg:grid-cols-5 gap-10">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10">
           {B.map((b, i) => (
-            <div key={i} className="flex flex-col gap-3 group">
+            <div key={i} className="flex flex-col items-center text-center md:items-start md:text-left gap-3 group">
               <div className="w-8 h-8 flex items-center justify-center bg-gray-50/50 grayscale group-hover:grayscale-0 transition-all">
                 <b.icon size={18} stroke={1.5} className="text-gray-400 group-hover:text-black transition-colors" />
               </div>

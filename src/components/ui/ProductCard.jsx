@@ -31,12 +31,12 @@ export default function ProductCard({ product }) {
         />
         
         {/* Wishlist Button - Minimal */}
-        <button onClick={wish} className="absolute top-4 right-4 p-2 bg-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity shadow-sm">
+        <button onClick={wish} className="absolute top-4 right-4 p-2 bg-white rounded-full lg:opacity-0 group-hover:opacity-100 transition-opacity shadow-sm z-10">
           {liked ? <IconHeartFilled size={18} className="text-red-500" /> : <IconHeart size={18} />}
         </button>
 
         {/* Quick Add - Minimal Button */}
-        <div className="absolute inset-x-0 bottom-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform bg-white/60 backdrop-blur-md">
+        <div className="absolute inset-x-0 bottom-0 p-4 translate-y-0 lg:translate-y-full group-hover:translate-y-0 transition-transform bg-white/60 lg:bg-white/60 backdrop-blur-md">
           <button 
             onClick={addCart}
             className="w-full bg-black text-white py-3 text-[10px] font-bold uppercase tracking-widest hover:bg-gray-900 transition-colors"

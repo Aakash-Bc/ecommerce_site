@@ -74,7 +74,7 @@ export default function Footer() {
         </div>
 
         {/* Info Bar */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-10 border-t border-gray-100 items-center">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-10 pt-10 border-t border-gray-100">
           
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
@@ -85,18 +85,17 @@ export default function Footer() {
             </div>
           </div>
 
-          <div className="flex justify-center gap-8 grayscale opacity-20 hover:opacity-100 transition-opacity duration-500">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" className="h-3" alt="Visa" />
-            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" className="h-5" alt="Mastercard" />
-            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" className="h-4" alt="PayPal" />
+          <div className="flex justify-center gap-10 grayscale opacity-20 hover:opacity-100 transition-opacity duration-500">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" className="h-2.5" alt="Visa" />
+            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" className="h-4" alt="Mastercard" />
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" className="h-3.5" alt="PayPal" />
           </div>
 
-          <div className="text-right">
-            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+          <div className="text-center md:text-right">
+            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest leading-loose">
               © {currentYear} Studio Edition. Built for the modern world.
             </p>
           </div>
-
         </div>
       </div>
     </footer>

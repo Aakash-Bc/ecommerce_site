@@ -15,12 +15,16 @@
   --shadow-md: 0 12px 24px -10px rgba(0,0,0,0.05);
   --shadow-lg: 0 32px 64px -15px rgba(0,0,0,0.1);
 
-  --animate-marquee: marquee 30s linear infinite;
-  --animate-marquee-slow: marquee 60s linear infinite;
+  --animate-marquee: marquee 40s linear infinite;
+  --animate-marquee-slow: marquee 80s linear infinite;
 
   @keyframes marquee {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
 }
 
@@ -45,23 +49,14 @@ body {
   line-height: 1.6;
 }
 
-/* Base Headings - Keep for semantic elements */
-h1, h2, h3, h4 {
-  color: #000;
-  font-weight: 900;
-  letter-spacing: -0.05em;
-  line-height: 1.1;
-  text-transform: uppercase;
-}
-
-p {
-  letter-spacing: -0.01em;
-}
-
-/* Custom Scrollbar - Minimal / Hidden */
-::-webkit-scrollbar { width: 3px; }
+/* Premium Scrollbar */
+::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #eee; border-radius: 10px; }
+::-webkit-scrollbar-thumb { 
+  background: #e5e5e5; 
+  border-radius: 20px;
+  transition: background 0.3s ease;
+}
 ::-webkit-scrollbar-thumb:hover { background: #000; }
 
 ::selection {
@@ -69,22 +64,48 @@ p {
   color: #fff;
 }
 
+h1, h2, h3, h4 {
+  color: #000;
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+/* Perspective Class for animations */
+.perspective {
+  perspective: 1000px;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(25px) saturate(180%);
+  -webkit-backdrop-filter: blur(25px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
 .fade-up {
   opacity: 0;
-  transform: translateY(30px);
-  animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transform: translateY(20px);
+  animation: fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @keyframes fadeUp {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Utility Shortcuts */
-.border-light { border-color: #f1f1f1; }
-.bg-soft { background-color: #fcfcfc; }
-
-.glass {
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(0, 0, 0, 0.05);
+/* Nav Link Hover Animation */
+.nav-link-underline {
+  @apply relative py-2 transition-colors duration-500;
 }
+.nav-link-underline::after {
+  content: '';
+  @apply absolute bottom-0 left-0 w-0 h-[1.5px] bg-black transition-all duration-500 rounded-full;
+}
+.nav-link-underline:hover::after {
+  @apply w-full;
+}
+
+/* Utility Shortcuts */
+.border-light { border-color: #f5f5f5; }
+.bg-soft { background-color: #fafafa; }

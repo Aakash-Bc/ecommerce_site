@@ -33,16 +33,16 @@ export default function HeroBanner() {
           <img src={s.img} alt="" className="w-full h-full object-cover brightness-[0.9]" />
           <div className="absolute inset-0 bg-black/5" />
           
-          <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
             <motion.p 
               initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-              className="text-[10px] font-black uppercase tracking-[0.6em] text-black mb-6"
+              className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.5em] text-black mb-4 md:mb-6"
             >
               {s.sub}
             </motion.p>
             <motion.h1 
               initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
-              className="text-6xl md:text-8xl font-black text-black tracking-tight mb-12 uppercase leading-none"
+              className="text-5xl sm:text-7xl md:text-8xl font-black text-black tracking-tight mb-10 md:mb-12 uppercase leading-none"
             >
               {s.title}
             </motion.h1>
@@ -50,7 +50,7 @@ export default function HeroBanner() {
                initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}
                className="flex gap-4"
             >
-              <Link to={s.link} className="inline-flex items-center justify-center px-12 py-5 bg-black text-white font-black text-[10px] uppercase tracking-[0.3em] hover:scale-105 transition-all duration-500">
+              <Link to={s.link} className="inline-flex items-center justify-center px-8 md:px-12 py-4 md:py-5 bg-black text-white font-black text-[10px] uppercase tracking-[0.3em] hover:scale-105 transition-all duration-500">
                 Shop Collection
               </Link>
             </motion.div>
